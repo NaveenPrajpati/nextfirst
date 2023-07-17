@@ -2,6 +2,7 @@ import {dbconnect} from '@/config/dbConfig'
 import User from '@/models/userModal';
 import { NextRequest,NextResponse } from 'next/server';
 import bcrypt from 'bcrypt'
+import { sendMail } from '@/helpers/mailer';
 
 dbconnect()
 
@@ -32,7 +33,11 @@ try {
    })
 
    const saveduser=await newUser.save()
-
+console.log(saveduser)
+console.log(saveduser._id.toHexString())
+   //send verification email
+   await sendMail({email,emailType:"VERIFY",userId:saveduser._id})
+   
    return NextResponse.json({
     success:true,
     message:'user created ',

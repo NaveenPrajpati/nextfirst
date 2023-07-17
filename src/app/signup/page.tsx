@@ -34,10 +34,10 @@ const router=useRouter();
          
           <input
              type="text" id='name' name='name' onChange={(e)=>setUser({...user,name:e.target.value})}
-            placeholder='username' className='p-2 w-1/2 '/>
+            placeholder='username' className='p-2 w-1/2 text-black'/>
             <input
              type="text" id='email' name='email' onChange={(e)=>setUser({...user,email:e.target.value})}
-            placeholder='Email' className='p-2 w-1/2 '/>
+            placeholder='Email' className='p-2 w-1/2 text-black'/>
 
             <input
              type="password" id='password' name='password' onChange={(e)=>setUser({...user,password:e.target.value})}
