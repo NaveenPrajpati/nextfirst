@@ -1,5 +1,7 @@
 "use client";
+import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {useState} from 'react'
 
 function SignupPage() {
@@ -8,9 +10,18 @@ function SignupPage() {
         email:'',
         password:''
     })
+const router=useRouter();
 
-    function onSubmit(){
-
+   async function onSubmit(){
+        try {
+          await axios.post('/api/users/signup',user)
+          .then(res=>{
+            console.log(res.data)
+            router.push('/login')
+          })
+        } catch (error) {
+            console.log('error occur ',error)
+        }
     }
 
     return (
@@ -30,9 +41,9 @@ function SignupPage() {
 
             <input
              type="password" id='password' name='password' onChange={(e)=>setUser({...user,password:e.target.value})}
-            placeholder='Password' className='p-2 w-1/2 '/><br />  
+            placeholder='Password' className='text-black p-2 w-1/2 '/><br />  
 
-            <button className='my-5 p-1 text-white'>Signup</button>
+            <button className='my-5 p-1 text-white' onClick={onSubmit}>Signup</button>
 
             <Link href={'/login'} >goto login</Link>
             </div>

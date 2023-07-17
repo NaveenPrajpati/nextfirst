@@ -1,15 +1,28 @@
 "use client";
+import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {useState} from 'react'
 
 function LoginPage() {
+    const router=useRouter();
     const [user,setUser]=useState({
       
         email:'',
         password:''
     })
 
-    function onSubmit(){
+   async function onSubmit(){
+
+    try {
+        await axios.post('/api/users/login',user)
+        .then(res=>{
+          console.log(res.data)
+          router.push('/profile')
+        })
+      } catch (error) {
+          console.log('error occur ',error)
+      }
 
     }
 
@@ -27,9 +40,9 @@ function LoginPage() {
 
             <input
              type="password" id='password' name='password' onChange={(e)=>setUser({...user,password:e.target.value})}
-            placeholder='Password' className='p-2 w-1/2 '/><br />  
+            placeholder='Password' className='p-2 w-1/2 text-black'/><br />  
 
-            <button className='my-5 p-1 text-white'>Login</button>
+            <button className='my-5 p-1 text-white' onClick={onSubmit}>Login</button>
 
             <Link href={'/signup'} >goto signup</Link>
             </div>
